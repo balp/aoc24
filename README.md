@@ -6,7 +6,7 @@
 
 ## Running the Puzzles
 
-Provide your solution to the first part of everyday in the `day-X/a.ts` file (where `X` is the day number!):
+Provide your solution to the first part of everyday in the `day-X/b.ts` file (where `X` is the day number!):
 
 `ts
 import { runSolution } from '../utils.ts';
@@ -35,11 +35,10 @@ If you want to provide an additional data set, you can create a file following t
 - or `nx X-a-{DATA_SET_NAME}`
 - or `nx X-{DATA_SET_NAME}`.
 
-Usually, each day is split into two parts, in this template, we call it "part A" and "part B". A `day-X/b.ts` file has been provided for you for the second half of each day, as well as a matching set of `data.txt` files for part B. You can run these with the command: `nx day-X-b` or `nx X-b` (note that `nx X` will always only run 'part A'). The same rules apply for providing sample and additional data sets for part B.
+Usually, each day is split into two parts, in this template, we call it "part A" and "part B". A `day-X/a.ts` file has been provided for you for the second half of each day, as well as a matching set of `data.txt` files for part B. You can run these with the command: `nx day-X-b` or `nx X-b` (note that `nx X` will always only run 'part A'). The same rules apply for providing sample and additional data sets for part B.
 
 Usually part B builds on the solution for part A. Obviously, if it makes sense, you can just continue to create your solution in the 'part A' files and work on from there, ignoring the 'part B' files.
 
 ## File Watching
 
 Every command above supports a `watch-` version of the command as well. For example, if you'd like to run your command: `nx day-1-a-sample` and have it re-run whenever a file is saved, you can run the command: `nx watch-day-1-a-sample`.
-

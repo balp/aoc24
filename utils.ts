@@ -25,3 +25,9 @@ function createFileName(day: number, part: 'a' | 'b', dataSet?: string) {
   return join(`day-${day}`, `${part}.data${dataSet ? `.${dataSet}` : ''}.txt`);
 }
 
+export function string_to_number_array(data: string[]) {
+  data.pop()
+  const input_strings = data.map((x) => x.split(/ +/))
+  const input = input_strings.map((x) => x.map((y) => +y))
+  return input;
+}
