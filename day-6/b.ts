@@ -10,7 +10,7 @@ interface Position {
 export async function day6a(data: string[]) {
   data.pop()
   const input = data.map((l) => l.split(''))
-  console.log(input);
+  // console.log(input);
 
   function find_start(data: string[][]): Position {
     for (let x = 0; x < data.length; x++) {
@@ -67,11 +67,22 @@ export async function day6a(data: string[]) {
   function solve_maze(pos,maze) {
     const steps = []
     while (in_maze(pos, maze)) {
+      maze[pos.x][pos.y] = '*';
       // display_maze(pos, maze);
       const marker = "^>v<"
       maze[pos.x][pos.y] = marker[pos.direction];
-      const in_front_pos = get_ahead(pos)
-      steps.push(pos)
+      if (steps.some((e) => JSON.stringify(pos) == JSON.stringify(e))) {
+        console.log("LOOOOPING");
+        return true;
+      }
+      const in_front_pos = get_ahead({...pos})
+      // console.log(pos, in_front_pos, steps);
+
+      if (steps.some((e) => JSON.stringify(in_front_pos) == JSON.stringify(e))) {
+        console.log("LOOOOPING 2");
+        return true;
+      }
+      steps.push({ ...pos})
       if (in_maze(in_front_pos, maze)) {
         if (maze[in_front_pos.x][in_front_pos.y] == "#") {
           pos.direction = (pos.direction + 1) % 4;
@@ -79,6 +90,10 @@ export async function day6a(data: string[]) {
           pos.direction = (pos.direction + 1) % 4;
         } else if (maze[in_front_pos.x][in_front_pos.y] == marker[pos.direction]) {
           console.log("LOOOP")
+          pos = in_front_pos
+          // console.log(in_front_pos)
+          // console.log(steps)
+          // display_maze(start_position, maze)
           return true;
 
         } else if(steps.length > 60000) {
