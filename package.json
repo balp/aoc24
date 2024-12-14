@@ -6,6 +6,8 @@
   "private": true,
   "dependencies": {
     "chalk": "latest",
+    "mathjs": "^14.0.1",
+    "pnpm": "^9.15.0",
     "ts-aoc-starter": "2.0.2"
   },
   "devDependencies": {
