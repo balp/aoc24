@@ -1,5 +1,4 @@
 import {runSolution} from '../utils.ts';
-import {number, string} from "mathjs";
 
 interface Position {
   x: number;

@@ -96,7 +96,7 @@ export async function day18b(data: string[]) {
   }
   console.log("Done", m);
   console.log("Byte is: %d,%d", input[m-1].x, input[m-1].y);
-  return input[i].toString();
+  return input[m].toString();
 }
 
 await runSolution(day18b);

@@ -27,6 +27,7 @@ class RaceMap {
     this.size_y = data[0].length;
     for (let x = 0; x < this.size_x; x++) {
       this.map.push(data[x].split(''));
+      this.distance.push(new Array(this.size_y).fill(Infinity));
       for (let y = 0; y < this.size_y; y++) {
         if (this.map[x][y] === 'S') {
           this.start = {x, y};
@@ -47,14 +48,17 @@ class RaceMap {
         if (this.map[x][y] === '.'
           || this.map[x][y] === 'E') {
           unvisited.add({x, y, distance: Infinity, direction: '', before: []});
+          this.distance[x][y] = Infinity;
         } else if (this.map[x][y] === 'S') {
           unvisited.add({x, y, distance: 0, direction: '>', before: []});
+          this.distance[x][y] = 0;
         }
       }
     }
     // console.log(unvisited);
     while (true) {
       console.log("Loop: Step 3");
+      this.draw_map()
       let smallest: UnvisitedNode = {x:0, y:0, distance: Infinity, direction: '', before: []};
       for (const node of unvisited) {
         // console.log("Looking at node", node);
@@ -69,7 +73,7 @@ class RaceMap {
       }
       if (smallest.x === this.end.x && smallest.y === this.end.y) {
         console.log("Found the end", smallest, visited);
-        let nodes = [smallest];
+        const nodes = [smallest];
         const path: Position[] = [];
         while (true) {
           if (nodes[0].before.length === 0) break;
@@ -101,6 +105,7 @@ class RaceMap {
       } else if (smallest.direction === 'v') {
         in_front = {x: smallest.x+1, y: smallest.y}
       }
+      this.distance[in_front.x][in_front.y] = smallest.distance + 1;
       for (const node of unvisited) {
         if (node.x === in_front.x && node.y === in_front.y) {
           if (node.distance == smallest.distance + 1) {
@@ -124,6 +129,7 @@ class RaceMap {
       } else if (smallest.direction === 'v') {
         to_left = {x: smallest.x, y: smallest.y+1, direction: '>'}
       }
+      this.distance[to_left.x][to_left.y] = smallest.distance + 1001;
       for (const node of unvisited) {
         if (node.x === to_left.x && node.y === to_left.y) {
           if (node.distance == smallest.distance + 1001) {
@@ -147,6 +153,7 @@ class RaceMap {
       } else if (smallest.direction === 'v') {
         to_right = {x: smallest.x, y: smallest.y-1, direction: '<'}
       }
+      this.distance[to_right.x][to_right.y] = smallest.distance + 1001;
       for (const node of unvisited) {
         if (node.x === to_right.x && node.y === to_right.y) {
           if (node.distance == smallest.distance + 1001) {
@@ -164,6 +171,27 @@ class RaceMap {
       unvisited.delete(smallest);
     }
     return Infinity;
+  }
+
+
+  private draw_map() {
+    for (let x = 0; x < this.size_x; x++) {
+      const line = []
+      for (let y = 0; y < this.size_y; y++) {
+        if (this.map[x][y] === "#") {
+          line.push("#####");
+        } else if (this.map[x][y] === "S") {
+          line.push(" SSS ");
+        } else if (this.map[x][y] === "E") {
+          line.push(" EEE ");
+        } else if (this.distance[x][y] === Infinity) {
+          line.push(" ... ");
+        } else {
+          line.push((this.distance[x][y]).toString(16).padStart(5, " "));
+        }
+      }
+      console.log(line.join(''));
+    }
   }
 }
 
