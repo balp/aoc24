@@ -110,16 +110,16 @@ class RaceMap {
         for (let d_x = -20; d_x <= 20; d_x++) {
           for (let d_y = -20; d_y <= 20; d_y++) {
             const distance = Math.abs(d_x) + Math.abs(d_y);
-            if (distance >= 19) {
+            if (distance > 20) {
               continue;
             }
             const candidate: Position = {x: x + d_x, y: y + d_y};
             if (this.isValid(candidate)) {
               const gain = this.distance[candidate.x][candidate.y] - this.distance[x][y] - distance;
-              if (this.distance[x][y] < 2) {
-                console.log(" -> ", candidate, distance, gain);
-              }
-              if (gain >= 50) {
+              // if (this.distance[x][y] < 2) {
+              //   console.log(" -> ", candidate, distance, gain);
+              // }
+              if (gain >= 100) {
                 // console.log(" -> ", x, y, candidate, gain);
                 cheats.push({start: {x, y}, end: candidate, gain})
               }
@@ -143,15 +143,15 @@ export async function day20b(data: string[]) {
   console.log('')
   map.draw()
   const cheats = map.cheats()
-  const gains = cheats.map(cheat => cheat.gain)
+  //const gains = cheats.map(cheat => cheat.gain)
   // console.log(gains)
-  const occurrences = new Map<number, number>();
-  gains.forEach(num => {
-    occurrences.set(num, (occurrences.get(num) || 0) + 1);
-  });
-  const entries = Array.from(occurrences.entries());
-  entries.sort((a, b) => a[0] - b[0]);
-  console.log(entries);
+  //const occurrences = new Map<number, number>();
+  //gains.forEach(num => {
+  //  occurrences.set(num, (occurrences.get(num) || 0) + 1);
+  //});
+  //const entries = Array.from(occurrences.entries());
+  //entries.sort((a, b) => a[0] - b[0]);
+  //console.log(entries);
   return cheats.length;
 }
 
